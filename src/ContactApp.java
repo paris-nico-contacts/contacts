@@ -1,12 +1,10 @@
 import java.io.*;
 import java.nio.file.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class ContactApp {
     static Path newPath = Paths.get("contacts.txt");
-    private static ArrayList<Contact> contacts = new ArrayList<>();
+    public static ArrayList<Contact> contacts = new ArrayList<>();
 
     public static void createFile() throws IOException {
         try {
@@ -66,9 +64,39 @@ public class ContactApp {
         writeContacts();
     }
 
+    public static void searchContact() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter the name of your contact: ");
+        String name = sc.nextLine();
+        for (Contact contact : contacts) {
+            if (Objects.equals(name, contact.getName())) {
+                System.out.println(contact.getName());
+            }
+        }
+    }
+
+    public static void deleteContact() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter the contact you want to delete: ");
+        String name = sc.nextLine();
+//        Contact contactDelete = new
+        int index = 0;
+        for(Contact contact : contacts) { 
+            
+            if (Objects.equals(name, contact.getName())) {
+                index = contacts.indexOf(contact);
+            }
+            
+        }
+        contacts.remove(contacts.get(index));
+    }
+
 
     public static void main(String[] args) throws IOException {
         loadContacts();
+//        searchContact();
+//        addContact();
+        deleteContact();
 
     }
 }
