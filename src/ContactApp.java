@@ -30,8 +30,21 @@ public class ContactApp {
 
     public static void printContacts() throws IOException {
         System.out.println();
+        int length = 0;
         for (Contact contact: contacts) {
-            System.out.println("Name: " + contact.getName() + " | " + "Number: " + contact.getNumber());
+            if (contact.getName().length() > length) {
+                length = contact.getName().length();
+            }
+        }
+        for (Contact contact: contacts) {
+            String numString = String.valueOf(contact.getNumber());
+            if (numString.length() == 7) {
+                numString = numString.substring(0,3) + "-" + numString.substring(3, numString.length());
+            } else {
+                numString = numString.substring(0,3) + "-" + numString.substring(3,6) + "-" + numString.substring(6, numString.length());
+            }
+            String output = "%-" + length + "s| %-12s |\n";
+            System.out.printf(output, contact.getName(), numString);
         }
     }
 
@@ -40,11 +53,11 @@ public class ContactApp {
         String line;
         String[] words = new String[2];
         String name;
-        int number;
+        long number;
         while((line = reader.readLine()) != null) {
             words = (line.split(","));
             name = words[0];
-            number = Integer.parseInt(words[1]);
+            number = Long.parseLong(words[1]);
             Contact contact = new Contact(name, number);
             contacts.add(contact);
         }
@@ -52,15 +65,29 @@ public class ContactApp {
     }
 
     public static void addContact() throws IOException {
+        int index = 0;
         Scanner sc = new Scanner(System.in);
         System.out.println("Add the name of your new contact: ");
         String name = sc.nextLine();
+
+
+        for (Contact contact: contacts) {
+            if (Objects.equals(name, contact.getName())) {
+                System.out.printf("There's already a contact named %s. Do you want to overwrite it? (Yes/No)", contact.getName());
+                String input = sc.nextLine();
+                if (input == "Yes" | input.equalsIgnoreCase("y")) {
+                    index = contacts.indexOf(contact);
+                }
+            }
+        }
+        contacts.remove(contacts.get(index));
         System.out.println("Add the number of your new contact: ");
-        int number = sc.nextInt();
+        long number = sc.nextLong();
         Contact newContact = new Contact(name, number);
         contacts.add(newContact);
         writeContacts();
     }
+
 
     public static void searchContact() {
         Scanner sc = new Scanner(System.in);
