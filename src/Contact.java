@@ -1,8 +1,8 @@
 public class Contact {
     private String name;
-    private int number;
+    private long number;
 
-    Contact(String name, int number) {
+    Contact(String name, long number) {
         this.name = name;
         this.number = number;
     }
@@ -15,11 +15,11 @@ public class Contact {
         this.name = name;
     }
 
-    public int getNumber() {
+    public long getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(long number) {
         this.number = number;
     }
 }
