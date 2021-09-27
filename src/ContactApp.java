@@ -31,7 +31,15 @@ public class ContactApp {
     public static void printContacts() throws IOException {
         System.out.println();
         for (Contact contact: contacts) {
-            System.out.println("Name: " + contact.getName() + " | " + "Number: " + contact.getNumber());
+            String num = String.valueOf(contact.getNumber());
+            num = num.substring(0, 3) + "-" + num.substring(3, num.length());
+            System.out.printf("Name: %s |  Number: %s \n", contact.getName(), num);
+        }
+    }
+
+    public static void test() {
+        for (Contact contact: contacts) {
+            System.out.println(contact.getNumber());
         }
     }
 
@@ -40,11 +48,11 @@ public class ContactApp {
         String line;
         String[] words = new String[2];
         String name;
-        int number;
+        double number;
         while((line = reader.readLine()) != null) {
             words = (line.split(","));
             name = words[0];
-            number = Integer.parseInt(words[1]);
+            number = Double.parseDouble(words[1]);
             Contact contact = new Contact(name, number);
             contacts.add(contact);
         }
@@ -56,7 +64,7 @@ public class ContactApp {
         System.out.println("Add the name of your new contact: ");
         String name = sc.nextLine();
         System.out.println("Add the number of your new contact: ");
-        int number = sc.nextInt();
+        double number = sc.nextDouble();
         Contact newContact = new Contact(name, number);
         contacts.add(newContact);
         writeContacts();
@@ -120,6 +128,8 @@ public class ContactApp {
 
 
     public static void main(String[] args) throws IOException {
-        runContactApp();
+//        runContactApp();
+        loadContacts();
+        test();
     }
 }
