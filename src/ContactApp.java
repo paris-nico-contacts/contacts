@@ -36,6 +36,11 @@ public class ContactApp {
                 length = contact.getName().length();
             }
         }
+        String wordName = "Name";
+        String phoneNumber = "Phone number";
+        String output = "%-" + length + "s | %-12s |\n";
+        System.out.printf(output, wordName, phoneNumber);
+        System.out.println("-".repeat(length + 17));
         for (Contact contact: contacts) {
             String numString = String.valueOf(contact.getNumber());
             if (numString.length() == 7) {
@@ -43,7 +48,7 @@ public class ContactApp {
             } else {
                 numString = numString.substring(0,3) + "-" + numString.substring(3,6) + "-" + numString.substring(6, numString.length());
             }
-            String output = "%-" + length + "s| %-12s |\n";
+//            String output = "%-" + length + "s | %-12s |\n";
             System.out.printf(output, contact.getName(), numString);
         }
     }
