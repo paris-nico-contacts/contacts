@@ -28,13 +28,11 @@ public class ContactApp {
         writer.close();
     }
 
-    public static void readContacts() throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader("contacts.txt"));
-        String line;
-        while((line = reader.readLine()) != null) {
-            System.out.println(line);
+    public static void printContacts() throws IOException {
+        System.out.println();
+        for (Contact contact: contacts) {
+            System.out.println("Name: " + contact.getName() + " | " + "Number: " + contact.getNumber());
         }
-        reader.close();
     }
 
     public static void loadContacts() throws IOException {
@@ -70,12 +68,13 @@ public class ContactApp {
         String name = sc.nextLine();
         for (Contact contact : contacts) {
             if (Objects.equals(name, contact.getName())) {
-                System.out.println(contact.getName());
+                System.out.println("Matched contacts: ");
+                System.out.printf("%s | %d\n", contact.getName(), contact.getNumber());
             }
         }
     }
 
-    public static void deleteContact() {
+    public static void deleteContact() throws IOException {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter the contact you want to delete: ");
         String name = sc.nextLine();
@@ -89,14 +88,38 @@ public class ContactApp {
             
         }
         contacts.remove(contacts.get(index));
+        writeContacts();
+    }
+
+    public static void runContactApp() throws IOException {
+        loadContacts();
+        System.out.println("Welcome to the Contact App");
+        boolean goOn = true;
+        do {
+            System.out.println("1. View contacts");
+            System.out.println("2. Add a new contact");
+            System.out.println("3. Search a contact by name");
+            System.out.println("4. Delete an existing contact");
+            System.out.println("5. Exit");
+            Scanner sc = new Scanner(System.in);
+            int response = sc.nextInt();
+            switch (response) {
+                case 1: printContacts();
+                    break;
+                case 2: addContact();
+                    break;
+                case 3: searchContact();
+                    break;
+                case 4: deleteContact();
+                    break;
+                case 5: goOn = false;
+                    break;
+            }
+        } while (goOn == true);
     }
 
 
     public static void main(String[] args) throws IOException {
-        loadContacts();
-//        searchContact();
-//        addContact();
-        deleteContact();
-
+        runContactApp();
     }
 }
