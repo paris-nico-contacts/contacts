@@ -1,5 +1,2 @@
-new contact,2342342
-spongebob,2102223333
-spongebob,2102452222
-geronimo stilton,2102102100
-nico gaytan,2102323411
+hello yall,2223332222
+new guy,234324233

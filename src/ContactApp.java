@@ -70,7 +70,7 @@ public class ContactApp {
     }
 
     public static void addContact() throws IOException {
-        int index = 0;
+        int index = -1;
         Scanner sc = new Scanner(System.in);
         System.out.println("Add the name of your new contact: ");
         String name = sc.nextLine();
@@ -82,10 +82,10 @@ public class ContactApp {
                 String input = sc.nextLine();
                 if (input == "Yes" | input.equalsIgnoreCase("y")) {
                     index = contacts.indexOf(contact);
+                    contacts.remove(contacts.get(index));
                 }
             }
         }
-        contacts.remove(contacts.get(index));
         System.out.println("Add the number of your new contact: ");
         long number = sc.nextLong();
         Contact newContact = new Contact(name, number);
@@ -110,8 +110,7 @@ public class ContactApp {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter the contact you want to delete: ");
         String name = sc.nextLine();
-//        Contact contactDelete = new
-        int index = 0;
+        int index = -1;
         for(Contact contact : contacts) { 
             
             if (Objects.equals(name, contact.getName())) {
@@ -119,7 +118,12 @@ public class ContactApp {
             }
             
         }
-        contacts.remove(contacts.get(index));
+        try {
+            contacts.remove(contacts.get(index));
+        } catch (Exception e) {
+
+        }
+
         writeContacts();
     }
 
